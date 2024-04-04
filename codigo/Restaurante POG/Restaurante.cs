@@ -9,7 +9,6 @@
         mesas = new List<Mesa>(TOTAL_MESAS);
         filaEspera = new Queue<Requisicao>();
 
-        // Inicializa as mesas
         for (int i = 0; i < TOTAL_MESAS; i++)
         {
             mesas.Add(new Mesa(i + 1)); 
@@ -35,12 +34,10 @@
         {
             mesa.Alocar();
             requisicao.Mesa = mesa;
-            Console.WriteLine($"Mesa {mesa.Id} alocada para {requisicao.Cliente.Nome}.");
         }
         else
         {
             filaEspera.Enqueue(requisicao);
-            Console.WriteLine($"{requisicao.Cliente.Nome} foi adicionado à fila de espera.");
         }
     }
 
