@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathe\\Desktop\\POG\\codigo\\Restaurante POG\\Restaurante POG.csproj": {}
+    "/Users/ricardoalencar/Documents/poo-tp-2024-1-grupo-pog/codigo/Restaurante POG/Restaurante POG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathe\\Desktop\\POG\\codigo\\Restaurante POG\\Restaurante POG.csproj": {
+    "/Users/ricardoalencar/Documents/poo-tp-2024-1-grupo-pog/codigo/Restaurante POG/Restaurante POG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathe\\Desktop\\POG\\codigo\\Restaurante POG\\Restaurante POG.csproj",
+        "projectUniqueName": "/Users/ricardoalencar/Documents/poo-tp-2024-1-grupo-pog/codigo/Restaurante POG/Restaurante POG.csproj",
         "projectName": "Restaurante POG",
-        "projectPath": "C:\\Users\\mathe\\Desktop\\POG\\codigo\\Restaurante POG\\Restaurante POG.csproj",
-        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathe\\Desktop\\POG\\codigo\\Restaurante POG\\obj\\",
+        "projectPath": "/Users/ricardoalencar/Documents/poo-tp-2024-1-grupo-pog/codigo/Restaurante POG/Restaurante POG.csproj",
+        "packagesPath": "/Users/ricardoalencar/.nuget/packages/",
+        "outputPath": "/Users/ricardoalencar/Documents/poo-tp-2024-1-grupo-pog/codigo/Restaurante POG/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/ricardoalencar/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -54,12 +53,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.27, 6.0.27]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[6.0.27, 6.0.27]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.27, 6.0.27]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/RuntimeIdentifierGraph.json"
         }
       }
     }
