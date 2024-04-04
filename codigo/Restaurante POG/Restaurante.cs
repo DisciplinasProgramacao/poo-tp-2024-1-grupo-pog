@@ -9,7 +9,6 @@
         mesas = new List<Mesa>(TOTAL_MESAS);
         filaEspera = new Queue<Requisicao>();
 
-        // Inicializa as mesas
         for (int i = 0; i < TOTAL_MESAS; i++)
         {
             mesas.Add(new Mesa(i + 1)); 
