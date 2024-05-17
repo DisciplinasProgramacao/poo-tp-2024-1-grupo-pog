@@ -1,4 +1,11 @@
-﻿public class Restaurante
+﻿using System;
+using System.Collections.Generic;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Restaurante
 {
     private List<Mesa> mesas;
     private Queue<Requisicao> filaEspera;
@@ -9,27 +16,29 @@
         mesas = new List<Mesa>(TOTAL_MESAS);
         filaEspera = new Queue<Requisicao>();
 
+        Random rand = new Random();
         for (int i = 0; i < TOTAL_MESAS; i++)
         {
-            mesas.Add(new Mesa(i + 1)); 
+            int capacidade = rand.Next(2, 6);
+            mesas.Add(new Mesa(i + 1, capacidade));
         }
     }
 
-    public Mesa LocalizarMesa(Requisicao requisicao)
+    public Cliente CadastrarCliente(string nome)
     {
-        foreach (var mesa in mesas)
-        {
-            if (mesa.VerificarDisponibilidade(requisicao.QtdePessoas))
-            {
-                return mesa;
-            }
-        }
-        return null; 
+        return new Cliente(nome);
     }
 
-    public void AlocarMesa(Requisicao requisicao)
+    public Requisicao CriarRequisicao(Cliente cliente, int qtdePessoas)
     {
-        Mesa mesa = LocalizarMesa(requisicao);
+        Requisicao requisicao = new Requisicao(cliente, qtdePessoas);
+        AlocarMesa(requisicao);
+        return requisicao;
+    }
+
+    private void AlocarMesa(Requisicao requisicao)
+    {
+        Mesa mesa = LocalizarMesa(requisicao.QtdePessoas);
         if (mesa != null)
         {
             mesa.Alocar();
@@ -41,15 +50,34 @@
         }
     }
 
+    private Mesa LocalizarMesa(int qtdePessoas)
+    {
+        return mesas.FirstOrDefault(m => m.VerificarDisponibilidade(qtdePessoas));
+    }
+
     public void DesalocarMesa(Mesa mesa)
     {
         mesa.Desalocar();
-        Console.WriteLine($"Mesa {mesa.Id} desalocada.");
-
         if (filaEspera.Count > 0)
         {
             Requisicao proximaRequisicao = filaEspera.Dequeue();
             AlocarMesa(proximaRequisicao);
         }
+    }
+
+    public void FinalizarRequisicao(Requisicao requisicao)
+    {
+        requisicao.TerminarAtendimento();
+        DesalocarMesa(requisicao.Mesa);
+    }
+
+    public Mesa LocalizarMesaPorId(int id)
+    {
+        return mesas.FirstOrDefault(m => m.Id == id);
+    }
+
+    public List<Mesa> ObterMesas()
+    {
+        return mesas;
     }
 }

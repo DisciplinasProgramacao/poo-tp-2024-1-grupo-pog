@@ -1,0 +1,15 @@
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.AssemblyInfoInputs.cache
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.AssemblyInfo.cs
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.csproj.CoreCompileInputs.cache
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.sourcelink.json
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\bin\Debug\net6.0\Restaurante POG.exe
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\bin\Debug\net6.0\Restaurante POG.deps.json
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\bin\Debug\net6.0\Restaurante POG.runtimeconfig.json
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\bin\Debug\net6.0\Restaurante POG.dll
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\bin\Debug\net6.0\Restaurante POG.pdb
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.dll
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\refint\Restaurante POG.dll
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.pdb
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\Restaurante POG.genruntimeconfig.cache
+C:\Users\mathe\Desktop\POG\codigo\Restaurante POG\obj\Debug\net6.0\ref\Restaurante POG.dll
