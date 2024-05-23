@@ -1,0 +1,7 @@
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\obj\Debug\Restaurente POG V2.csproj.AssemblyReference.cache
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\obj\Debug\Restaurente POG V2.csproj.CoreCompileInputs.cache
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\bin\Debug\Restaurente POG V2.exe.config
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\bin\Debug\Restaurente POG V2.exe
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\bin\Debug\Restaurente POG V2.pdb
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\obj\Debug\Restaurente POG V2.exe
+C:\Users\mathe\source\repos\poo-tp-2024-1-grupo-pog\codigo\Restaurente POG V2\obj\Debug\Restaurente POG V2.pdb
