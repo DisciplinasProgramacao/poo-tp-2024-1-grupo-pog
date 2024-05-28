@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using System;
-using System.Collections.Generic;
-
-
 class Program
 {
     private static Restaurante restaurante = new Restaurante();
     private static Dictionary<int, Cliente> clientes = new Dictionary<int, Cliente>();
-    private static Dictionary<int, Requisicao> requisicoes = new Dictionary<int, Requisicao>();
     private static int clienteId = 1;
     private static int requisicaoId = 1;
 
@@ -36,6 +31,12 @@ class Program
                     ExibirStatusMesas();
                     break;
                 case "5":
+                    ExibirCardapio();
+                    break;
+                case "6":
+                    AdicionarItemAoPedido();
+                    break;
+                case "7":
                     return;
                 default:
                     Console.WriteLine("Opção inválida. Tente novamente.");
@@ -51,7 +52,9 @@ class Program
         Console.WriteLine("2. Criar Requisição");
         Console.WriteLine("3. Finalizar Requisição");
         Console.WriteLine("4. Exibir Status das Mesas");
-        Console.WriteLine("5. Sair");
+        Console.WriteLine("5. Exibir Cardápio");
+        Console.WriteLine("6. Adicionar Item ao Pedido");
+        Console.WriteLine("7. Sair");
         Console.Write("Escolha uma opção: ");
     }
 
@@ -73,7 +76,7 @@ class Program
             if (int.TryParse(Console.ReadLine(), out int qtdePessoas))
             {
                 Requisicao requisicao = restaurante.CriarRequisicao(clientes[idCliente], qtdePessoas);
-                requisicoes.Add(requisicaoId++, requisicao);
+                restaurante.AdicionarRequisicao(requisicaoId++, requisicao);
                 if (requisicao.Mesa != null)
                 {
                     Console.WriteLine($"Mesa {requisicao.Mesa.Id} alocada para {requisicao.Cliente.Nome}.");
@@ -96,28 +99,14 @@ class Program
 
     private static void FinalizarRequisicao()
     {
-        Console.Write("ID da Mesa a ser desalocada: ");
-        if (int.TryParse(Console.ReadLine(), out int idMesa))
+        Console.Write("ID da Requisição a ser finalizada: ");
+        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
         {
-            Mesa mesa = restaurante.LocalizarMesaPorId(idMesa);
-            if (mesa != null && mesa.Ocupada)
-            {
-                Requisicao requisicao = requisicoes.Values.FirstOrDefault(r => r.Mesa == mesa);
-                if (requisicao != null)
-                {
-                    restaurante.FinalizarRequisicao(requisicao);
-                    requisicoes.Remove(requisicoes.First(kv => kv.Value == requisicao).Key);
-                    Console.WriteLine($"Requisição de {requisicao.Cliente.Nome} finalizada e mesa {mesa.Id} liberada.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Mesa não encontrada ou já está desocupada.");
-            }
+            restaurante.FinalizarRequisicao(idRequisicao);
         }
         else
         {
-            Console.WriteLine("ID de mesa inválido.");
+            Console.WriteLine("ID de requisição inválido.");
         }
     }
 
@@ -129,6 +118,32 @@ class Program
             Console.WriteLine($"Mesa {mesa.Id}: {(mesa.Ocupada ? "Ocupada" : "Disponível")}");
         }
     }
+
+    private static void ExibirCardapio()
+    {
+        restaurante.ExibirCardapio();
+    }
+
+    private static void AdicionarItemAoPedido()
+    {
+        Console.Write("ID da Requisição: ");
+        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
+        {
+            Console.Write("Nome do Item: ");
+            string nomeItem = Console.ReadLine();
+            Console.Write("Quantidade: ");
+            if (int.TryParse(Console.ReadLine(), out int quantidade))
+            {
+                restaurante.AdicionarItemAoPedido(idRequisicao, nomeItem, quantidade);
+            }
+            else
+            {
+                Console.WriteLine("Quantidade inválida.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("ID de requisição inválido.");
+        }
+    }
 }
-
-
