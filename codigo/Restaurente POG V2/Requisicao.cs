@@ -1,3 +1,6 @@
+using Restaurente_POG_V2;
+using System;
+
 public class Requisicao
 {
     public Cliente Cliente { get; private set; }
