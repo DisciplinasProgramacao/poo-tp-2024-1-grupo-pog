@@ -116,6 +116,14 @@ class Program
         foreach (var mesa in restaurante.ObterMesas())
         {
             Console.WriteLine($"Mesa {mesa.Id}: {(mesa.Ocupada ? "Ocupada" : "Disponível")}");
+            if (mesa.Ocupada)
+            {
+                int requisicaoId = restaurante.ObterRequisicaoIdPorMesa(mesa.Id);
+                if (requisicaoId != -1)
+                {
+                    restaurante.ExibirPedido(requisicaoId);
+                }
+            }
         }
     }
 
@@ -129,16 +137,22 @@ class Program
         Console.Write("ID da Requisição: ");
         if (int.TryParse(Console.ReadLine(), out int idRequisicao))
         {
-            Console.Write("Nome do Item: ");
-            string nomeItem = Console.ReadLine();
-            Console.Write("Quantidade: ");
-            if (int.TryParse(Console.ReadLine(), out int quantidade))
+            Console.Write("Número do Item: ");
+            if (int.TryParse(Console.ReadLine(), out int numeroItem))
             {
-                restaurante.AdicionarItemAoPedido(idRequisicao, nomeItem, quantidade);
+                Console.Write("Quantidade: ");
+                if (int.TryParse(Console.ReadLine(), out int quantidade))
+                {
+                    restaurante.AdicionarItemAoPedido(idRequisicao, numeroItem, quantidade);
+                }
+                else
+                {
+                    Console.WriteLine("Quantidade inválida.");
+                }
             }
             else
             {
-                Console.WriteLine("Quantidade inválida.");
+                Console.WriteLine("Número do item inválido.");
             }
         }
         else
@@ -146,4 +160,5 @@ class Program
             Console.WriteLine("ID de requisição inválido.");
         }
     }
+
 }

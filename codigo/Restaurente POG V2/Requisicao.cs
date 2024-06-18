@@ -30,7 +30,15 @@ public class Requisicao
 
     public void ExibirConta()
     {
+        double total = Pedido.CalcularTotal();
+        double taxaServico = total * 0.10;
+        double totalComTaxa = total + taxaServico;
+        double valorPorPessoa = totalComTaxa / QtdePessoas;
+
         Console.WriteLine($"Conta para {Cliente.Nome}:");
         Pedido.ExibirPedido();
+        Console.WriteLine($"Taxa de Serviço (10%): {taxaServico:C}");
+        Console.WriteLine($"Total com Taxa de Serviço: {totalComTaxa:C}");
+        Console.WriteLine($"Valor por Pessoa: {valorPorPessoa:C}");
     }
 }

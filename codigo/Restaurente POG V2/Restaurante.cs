@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Restaurente_POG_V2;
 
@@ -21,14 +18,27 @@ public class Restaurante
         cardapio = new Cardapio();
         requisicoes = new Dictionary<int, Requisicao>();
 
-        Random rand = new Random();
-        for (int i = 0; i < TOTAL_MESAS; i++)
-        {
-            int capacidade = rand.Next(2, 6);
-            mesas.Add(new Mesa(i + 1, capacidade));
-        }
+        InicializarMesas();
 
         cardapio.InicializarCardapio();
+    }
+
+    private void InicializarMesas()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            mesas.Add(new Mesa(i + 1, 4));
+        }
+
+        for (int i = 4; i < 8; i++)
+        {
+            mesas.Add(new Mesa(i + 1, 6));
+        }
+
+        for (int i = 8; i < 10; i++)
+        {
+            mesas.Add(new Mesa(i + 1, 8));
+        }
     }
 
     public Cliente CadastrarCliente(string nome)
@@ -48,15 +58,16 @@ public class Restaurante
         cardapio.ExibirCardapio();
     }
 
-    public void AdicionarItemAoPedido(int requisicaoId, string nomeItem, int quantidade)
+    public void AdicionarItemAoPedido(int requisicaoId, int numeroItem, int quantidade)
     {
         if (requisicoes.ContainsKey(requisicaoId))
         {
             Requisicao requisicao = requisicoes[requisicaoId];
-            ItemCardapio item = cardapio.BuscarItem(nomeItem);
+            ItemCardapio item = cardapio.BuscarItemPorNumero(numeroItem);
             if (item != null)
             {
                 requisicao.AdicionarItemAoPedido(item, quantidade);
+                Console.WriteLine($"Adicionado {quantidade}x {item.Nome} ao pedido da mesa {requisicao.Mesa.Id}.");
             }
             else
             {
@@ -142,5 +153,30 @@ public class Restaurante
     public void RemoverRequisicao(int id)
     {
         requisicoes.Remove(id);
+    }
+
+    public int ObterRequisicaoIdPorMesa(int mesaId)
+    {
+        foreach (var requisicao in requisicoes)
+        {
+            if (requisicao.Value.Mesa.Id == mesaId)
+            {
+                return requisicao.Key;
+            }
+        }
+        return -1;
+    }
+
+    public void ExibirPedido(int requisicaoId)
+    {
+        if (requisicoes.ContainsKey(requisicaoId))
+        {
+            Requisicao requisicao = requisicoes[requisicaoId];
+            requisicao.Pedido.ExibirPedido();
+        }
+        else
+        {
+            Console.WriteLine("Requisição não encontrada.");
+        }
     }
 }
