@@ -1,3 +1,4 @@
+using Restaurante_POG_V2;
 using Restaurente_POG_V2;
 using System;
 
@@ -19,6 +20,11 @@ public class Requisicao
     }
 
     public void AdicionarItemAoPedido(ItemCardapio item, int quantidade)
+    {
+        Pedido.AdicionarItem(item, quantidade);
+    }
+
+    public void AdicionarItemAoPedido(ItemCardapioCafe item, int quantidade)
     {
         Pedido.AdicionarItem(item, quantidade);
     }

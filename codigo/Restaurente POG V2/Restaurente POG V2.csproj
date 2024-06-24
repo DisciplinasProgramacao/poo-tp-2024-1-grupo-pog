@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cafe.cs" />
     <Compile Include="Cardapio.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ICardapio.cs" />
