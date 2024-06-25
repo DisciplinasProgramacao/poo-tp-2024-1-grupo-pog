@@ -42,9 +42,9 @@ namespace Restaurante_POG_V2
             }
         }
 
-        public Cliente CadastrarCliente(string nome)
+        public Cliente CadastrarCliente(int id, string nome)
         {
-            return new Cliente(nome);
+            return new Cliente(id, nome);
         }
 
         public Requisicao CriarRequisicao(Cliente cliente, int qtdePessoas)
