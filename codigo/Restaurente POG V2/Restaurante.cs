@@ -49,6 +49,11 @@ namespace Restaurante_POG_V2
 
         public Requisicao CriarRequisicao(Cliente cliente, int qtdePessoas)
         {
+            if (qtdePessoas > 8)
+            {
+                throw new ArgumentException("Quantidade de pessoas excede a capacidade máxima das mesas.");
+            }
+
             Requisicao requisicao = new Requisicao(cliente, qtdePessoas);
             AlocarMesa(requisicao);
             return requisicao;
@@ -61,37 +66,51 @@ namespace Restaurante_POG_V2
 
         public void AdicionarItemAoPedido(int requisicaoId, int numeroItem, int quantidade)
         {
-            if (requisicoes.ContainsKey(requisicaoId))
+            try
             {
-                Requisicao requisicao = requisicoes[requisicaoId];
-                ItemCardapio item = cardapio.BuscarItemPorNumero(numeroItem);
-                if (item != null)
+                if (requisicoes.ContainsKey(requisicaoId))
                 {
-                    requisicao.AdicionarItemAoPedido(item, quantidade);
-                    Console.WriteLine($"Adicionado {quantidade}x {item.Nome} ao pedido da mesa {requisicao.Mesa.Id}.");
+                    Requisicao requisicao = requisicoes[requisicaoId];
+                    ItemCardapio item = cardapio.BuscarItemPorNumero(numeroItem);
+                    if (item != null)
+                    {
+                        requisicao.AdicionarItemAoPedido(item, quantidade);
+                        Console.WriteLine($"Adicionado {quantidade}x {item.Nome} ao pedido da mesa {requisicao.Mesa.Id}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item não encontrado no cardápio.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Item não encontrado no cardápio.");
+                    Console.WriteLine("Requisição não encontrada.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Requisição não encontrada.");
+                Console.WriteLine($"Erro ao adicionar item ao pedido: {ex.Message}");
             }
         }
 
         private void AlocarMesa(Requisicao requisicao)
         {
-            Mesa mesa = LocalizarMesa(requisicao.QtdePessoas);
-            if (mesa != null)
+            try
             {
-                mesa.Alocar();
-                requisicao.Mesa = mesa;
+                Mesa mesa = LocalizarMesa(requisicao.QtdePessoas);
+                if (mesa != null)
+                {
+                    mesa.Alocar();
+                    requisicao.Mesa = mesa;
+                }
+                else
+                {
+                    filaEspera.Enqueue(requisicao);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                filaEspera.Enqueue(requisicao);
+                Console.WriteLine($"Erro ao alocar mesa: {ex.Message}");
             }
         }
 
@@ -109,23 +128,37 @@ namespace Restaurante_POG_V2
 
         public void DesalocarMesa(Mesa mesa)
         {
-            mesa.Desalocar();
-            if (filaEspera.Count > 0)
+            try
             {
-                Requisicao proximaRequisicao = filaEspera.Dequeue();
-                AlocarMesa(proximaRequisicao);
+                mesa.Desalocar();
+                if (filaEspera.Count > 0)
+                {
+                    Requisicao proximaRequisicao = filaEspera.Dequeue();
+                    AlocarMesa(proximaRequisicao);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao desalocar mesa: {ex.Message}");
             }
         }
 
         public void FinalizarRequisicao(int requisicaoId)
         {
-            if (requisicoes.ContainsKey(requisicaoId))
+            try
             {
-                Requisicao requisicao = requisicoes[requisicaoId];
-                requisicao.TerminarAtendimento();
-                requisicao.ExibirConta();
-                DesalocarMesa(requisicao.Mesa);
-                requisicoes.Remove(requisicaoId);
+                if (requisicoes.ContainsKey(requisicaoId))
+                {
+                    Requisicao requisicao = requisicoes[requisicaoId];
+                    requisicao.TerminarAtendimento();
+                    requisicao.ExibirConta();
+                    DesalocarMesa(requisicao.Mesa);
+                    requisicoes.Remove(requisicaoId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao finalizar requisição: {ex.Message}");
             }
         }
 
@@ -170,14 +203,21 @@ namespace Restaurante_POG_V2
 
         public void ExibirPedido(int requisicaoId)
         {
-            if (requisicoes.ContainsKey(requisicaoId))
+            try
             {
-                Requisicao requisicao = requisicoes[requisicaoId];
-                requisicao.Pedido.ExibirPedido();
+                if (requisicoes.ContainsKey(requisicaoId))
+                {
+                    Requisicao requisicao = requisicoes[requisicaoId];
+                    requisicao.Pedido.ExibirPedido();
+                }
+                else
+                {
+                    Console.WriteLine("Requisição não encontrada.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Requisição não encontrada.");
+                Console.WriteLine($"Erro ao exibir pedido: {ex.Message}");
             }
         }
     }
