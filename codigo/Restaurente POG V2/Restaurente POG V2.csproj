@@ -45,9 +45,11 @@
   <ItemGroup>
     <Compile Include="Cafe.cs" />
     <Compile Include="Cardapio.cs" />
+    <Compile Include="CardapioCafe.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ICardapio.cs" />
     <Compile Include="ItemCardapio.cs" />
+    <Compile Include="ItemCardapioCafe.cs" />
     <Compile Include="Mesa.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Program.cs" />
