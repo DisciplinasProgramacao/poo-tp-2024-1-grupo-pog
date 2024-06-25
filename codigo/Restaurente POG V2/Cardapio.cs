@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Restaurente_POG_V2;
 using System;
+using System.Collections.Generic;
 
-namespace Restaurente_POG_V2
+namespace Restaurante_POG_V2
 {
-    public class Cardapio
+    public class Cardapio : ICardapio
     {
         private List<ItemCardapio> itens;
 
@@ -33,7 +34,7 @@ namespace Restaurente_POG_V2
         {
             if (numero > 0 && numero <= itens.Count)
             {
-                return itens[numero - 1]; 
+                return itens[numero - 1];
             }
             return null;
         }
