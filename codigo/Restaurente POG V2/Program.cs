@@ -1,12 +1,10 @@
 ﻿using Restaurante_POG_V2;
-using Restaurente_POG_V2;
 using System;
 using System.Collections.Generic;
-using System.Data;
+
 class Program
 {
     private static Restaurante restaurante = new Restaurante();
-    private static Cafe cafe = new Cafe();
     private static Dictionary<int, Cliente> clientes = new Dictionary<int, Cliente>();
     private static int clienteId = 1;
     private static int requisicaoId = 1;
@@ -15,35 +13,7 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("Escolha o estabelecimento:");
-            Console.WriteLine("1. Restaurante");
-            Console.WriteLine("2. Café");
-            Console.WriteLine("3. Sair");
-            Console.Write("Escolha uma opção: ");
-            string escolha = Console.ReadLine();
-
-            switch (escolha)
-            {
-                case "1":
-                    GerenciarRestaurante();
-                    break;
-                case "2":
-                    GerenciarCafe();
-                    break;
-                case "3":
-                    return;
-                default:
-                    Console.WriteLine("Opção inválida. Tente novamente.");
-                    break;
-            }
-        }
-    }
-
-    private static void GerenciarRestaurante()
-    {
-        while (true)
-        {
-            MostrarMenuRestaurante();
+            MostrarMenu();
             string opcao = Console.ReadLine();
             Console.WriteLine();
 
@@ -68,7 +38,6 @@ class Program
                     AdicionarItemAoPedido();
                     break;
                 case "7":
-                    Console.Clear();
                     return;
                 default:
                     Console.WriteLine("Opção inválida. Tente novamente.");
@@ -77,228 +46,161 @@ class Program
         }
     }
 
-    private static void GerenciarCafe()
+    private static void MostrarMenu()
     {
-        while (true)
-        {
-            MostrarMenuCafe();
-            string opcao = Console.ReadLine();
-            Console.WriteLine();
-
-            switch (opcao)
-            {
-                case "1":
-                    CadastrarCliente();
-                    break;
-                case "2":
-                    ComecarAtendimento();
-                    break;
-                case "3":
-                    FinalizarRequisicaoCafe();
-                    break;
-                case "4":
-                    ExibirCardapioCafe();
-                    break;
-                case "5":
-                    AdicionarItemAoPedidoCafe();
-                    break;
-                case "6":
-                    Console.Clear();
-                    return;
-                default:
-                    Console.WriteLine("Opção inválida. Tente novamente.");
-                    break;
-            }
-        }
-    }
-
-    private static void MostrarMenuRestaurante()
-    {
-        Console.WriteLine("\n--- Sistema de Gerenciamento do Restaurante ---");
+        Console.WriteLine("\n--- Sistema de Gerenciamento de Restaurante ---");
         Console.WriteLine("1. Cadastrar Cliente");
         Console.WriteLine("2. Criar Requisição");
         Console.WriteLine("3. Finalizar Requisição");
         Console.WriteLine("4. Exibir Status das Mesas");
         Console.WriteLine("5. Exibir Cardápio");
         Console.WriteLine("6. Adicionar Item ao Pedido");
-        Console.WriteLine("7. Voltar");
+        Console.WriteLine("7. Sair");
         Console.Write("Escolha uma opção: ");
     }
 
-    private static void MostrarMenuCafe()
-    {
-        Console.WriteLine("\n--- Sistema de Gerenciamento do Café ---");
-        Console.WriteLine("1. Cadastrar Cliente");
-        Console.WriteLine("2. Começar Atendimento");
-        Console.WriteLine("3. Finalizar Requisição");
-        Console.WriteLine("4. Exibir Cardápio");
-        Console.WriteLine("5. Adicionar Item ao Pedido");
-        Console.WriteLine("6. Voltar");
-        Console.Write("Escolha uma opção: ");
-    }
-
-    // Métodos do Restaurante
     private static void CadastrarCliente()
     {
-        Console.Write("Nome do Cliente: ");
-        string nomeCliente = Console.ReadLine();
-        Cliente cliente = new Cliente(nomeCliente);
-        clientes.Add(clienteId++, cliente);
-        Console.WriteLine($"Cliente '{nomeCliente}' cadastrado com sucesso!");
+        try
+        {
+            Console.Write("Nome do Cliente: ");
+            string nomeCliente = Console.ReadLine();
+            Cliente cliente = restaurante.CadastrarCliente(nomeCliente);
+            clientes.Add(clienteId++, cliente);
+            Console.WriteLine($"Cliente '{nomeCliente}' cadastrado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao cadastrar cliente: {ex.Message}");
+        }
     }
 
     private static void CriarRequisicao()
     {
-        Console.Write("ID do Cliente: ");
-        if (int.TryParse(Console.ReadLine(), out int idCliente) && clientes.ContainsKey(idCliente))
+        try
         {
-            Console.Write("Quantidade de Pessoas: ");
-            if (int.TryParse(Console.ReadLine(), out int qtdePessoas))
+            Console.Write("ID do Cliente: ");
+            if (int.TryParse(Console.ReadLine(), out int idCliente) && clientes.ContainsKey(idCliente))
             {
-                Requisicao requisicao = restaurante.CriarRequisicao(clientes[idCliente], qtdePessoas);
-                restaurante.AdicionarRequisicao(requisicaoId++, requisicao);
-                if (requisicao.Mesa != null)
+                Console.Write("Quantidade de Pessoas: ");
+                if (int.TryParse(Console.ReadLine(), out int qtdePessoas))
                 {
-                    Console.WriteLine($"Mesa {requisicao.Mesa.Id} alocada para {requisicao.Cliente.Nome}.");
+                    Requisicao requisicao = restaurante.CriarRequisicao(clientes[idCliente], qtdePessoas);
+                    restaurante.AdicionarRequisicao(requisicaoId++, requisicao);
+                    if (requisicao.Mesa != null)
+                    {
+                        Console.WriteLine($"Mesa {requisicao.Mesa.Id} alocada para {requisicao.Cliente.Nome}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Não há mesas disponíveis para {requisicao.Cliente.Nome}. Adicionado à fila de espera.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Não há mesas disponíveis para {requisicao.Cliente.Nome}. Adicionado à fila de espera.");
+                    Console.WriteLine("Quantidade de pessoas inválida.");
                 }
             }
             else
             {
-                Console.WriteLine("Quantidade de pessoas inválida.");
+                Console.WriteLine("ID de cliente inválido.");
             }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("ID de cliente inválido.");
+            Console.WriteLine($"Erro ao criar requisição: {ex.Message}");
         }
     }
 
     private static void FinalizarRequisicao()
     {
-        Console.Write("ID da Requisição a ser finalizada: ");
-        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
+        try
         {
-            restaurante.FinalizarRequisicao(idRequisicao);
+            Console.Write("ID da Requisição a ser finalizada: ");
+            if (int.TryParse(Console.ReadLine(), out int idRequisicao))
+            {
+                restaurante.FinalizarRequisicao(idRequisicao);
+            }
+            else
+            {
+                Console.WriteLine("ID de requisição inválido.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("ID de requisição inválido.");
+            Console.WriteLine($"Erro ao finalizar requisição: {ex.Message}");
         }
     }
 
     private static void ExibirStatusMesas()
     {
-        Console.WriteLine("Status das Mesas:");
-        foreach (var mesa in restaurante.ObterMesas())
+        try
         {
-            Console.WriteLine($"Mesa {mesa.Id}: {(mesa.Ocupada ? "Ocupada" : "Disponível")}");
-            if (mesa.Ocupada)
+            Console.WriteLine("Status das Mesas:");
+            foreach (var mesa in restaurante.ObterMesas())
             {
-                int requisicaoId = restaurante.ObterRequisicaoIdPorMesa(mesa.Id);
-                if (requisicaoId != -1)
+                Console.WriteLine($"Mesa {mesa.Id}: {(mesa.Ocupada ? "Ocupada" : "Disponível")}");
+                if (mesa.Ocupada)
                 {
-                    restaurante.ExibirPedido(requisicaoId);
+                    int requisicaoId = restaurante.ObterRequisicaoIdPorMesa(mesa.Id);
+                    if (requisicaoId != -1)
+                    {
+                        restaurante.ExibirPedido(requisicaoId);
+                    }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao exibir status das mesas: {ex.Message}");
         }
     }
 
     private static void ExibirCardapio()
     {
-        restaurante.ExibirCardapio();
+        try
+        {
+            restaurante.ExibirCardapio();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao exibir cardápio: {ex.Message}");
+        }
     }
 
     private static void AdicionarItemAoPedido()
     {
-        Console.Write("ID da Requisição: ");
-        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
+        try
         {
-            Console.Write("Número do Item: ");
-            if (int.TryParse(Console.ReadLine(), out int numeroItem))
+            Console.Write("ID da Requisição: ");
+            if (int.TryParse(Console.ReadLine(), out int idRequisicao))
             {
-                Console.Write("Quantidade: ");
-                if (int.TryParse(Console.ReadLine(), out int quantidade))
+                Console.Write("Número do Item: ");
+                if (int.TryParse(Console.ReadLine(), out int numeroItem))
                 {
-                    restaurante.AdicionarItemAoPedido(idRequisicao, numeroItem, quantidade);
+                    Console.Write("Quantidade: ");
+                    if (int.TryParse(Console.ReadLine(), out int quantidade))
+                    {
+                        restaurante.AdicionarItemAoPedido(idRequisicao, numeroItem, quantidade);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Quantidade inválida.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Quantidade inválida.");
+                    Console.WriteLine("Número do item inválido.");
                 }
             }
             else
             {
-                Console.WriteLine("Número do item inválido.");
+                Console.WriteLine("ID de requisição inválido.");
             }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("ID de requisição inválido.");
-        }
-    }
-
-    // Métodos do Café
-    private static void ComecarAtendimento()
-    {
-        Console.Write("ID do Cliente: ");
-        if (int.TryParse(Console.ReadLine(), out int idCliente) && clientes.ContainsKey(idCliente))
-        {
-            cafe.ComecarAtendimento(clientes[idCliente]);
-        }
-        else
-        {
-            Console.WriteLine("ID de cliente inválido.");
-        }
-    }
-
-    private static void FinalizarRequisicaoCafe()
-    {
-        Console.Write("ID da Requisição a ser finalizada: ");
-        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
-        {
-            cafe.FinalizarRequisicao(idRequisicao);
-        }
-        else
-        {
-            Console.WriteLine("ID de requisição inválido.");
-        }
-    }
-
-    private static void ExibirCardapioCafe()
-    {
-        cafe.ExibirCardapio();
-    }
-
-    private static void AdicionarItemAoPedidoCafe()
-    {
-        Console.Write("ID da Requisição: ");
-        if (int.TryParse(Console.ReadLine(), out int idRequisicao))
-        {
-            Console.Write("Número do Item: ");
-            if (int.TryParse(Console.ReadLine(), out int numeroItem))
-            {
-                Console.Write("Quantidade: ");
-                if (int.TryParse(Console.ReadLine(), out int quantidade))
-                {
-                    cafe.AdicionarItemAoPedido(idRequisicao, numeroItem, quantidade);
-                }
-                else
-                {
-                    Console.WriteLine("Quantidade inválida.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Número do item inválido.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("ID de requisição inválido.");
+            Console.WriteLine($"Erro ao adicionar item ao pedido: {ex.Message}");
         }
     }
 }
