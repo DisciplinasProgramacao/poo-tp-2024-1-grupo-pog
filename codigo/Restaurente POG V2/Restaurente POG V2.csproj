@@ -47,6 +47,7 @@
     <Compile Include="Cardapio.cs" />
     <Compile Include="CardapioCafe.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="Estabelecimento.cs" />
     <Compile Include="ICardapio.cs" />
     <Compile Include="ItemCardapio.cs" />
     <Compile Include="ItemCardapioCafe.cs" />
