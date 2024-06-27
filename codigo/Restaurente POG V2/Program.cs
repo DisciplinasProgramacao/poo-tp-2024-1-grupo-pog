@@ -90,7 +90,7 @@ class Program
             Console.Write("Nome do Cliente: ");
             string nomeCliente = Console.ReadLine();
             Cliente cliente = estabelecimento.CadastrarCliente(nomeCliente);
-            Console.WriteLine($"Cliente '{nomeCliente}' cadastrado com sucesso!");
+            Console.WriteLine($"Cliente '{nomeCliente}' cadastrado com sucesso! ID do cliente '{cliente.Id}'");
         }
         catch (ArgumentNullException ex)
         {
