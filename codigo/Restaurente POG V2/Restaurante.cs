@@ -45,22 +45,13 @@ namespace Restaurante_POG_V2
 
                 Requisicao requisicao = new Requisicao(cliente, qtdePessoas);
                 AlocarMesa(requisicao);
-                requisicoes.Add(requisicaoId++, requisicao);
-                if (requisicao.Mesa != null)
-                {
-                    Console.WriteLine($"Mesa {requisicao.Mesa.Id} alocada para {requisicao.Cliente.Nome}.");
-                }
-                else
-                {
-                    Console.WriteLine($"Não há mesas disponíveis para {requisicao.Cliente.Nome}. Adicionado à fila de espera.");
-                }
-                ExibirCardapio(); // Adicionando a exibição do cardápio
             }
             else
             {
                 Console.WriteLine("Quantidade de pessoas inválida.");
             }
         }
+
 
         private void AlocarMesa(Requisicao requisicao)
         {
@@ -69,12 +60,15 @@ namespace Restaurante_POG_V2
             {
                 mesa.Alocar();
                 requisicao.Mesa = mesa;
+                requisicoes.Add(requisicaoId++, requisicao);
             }
             else
             {
                 filaEspera.Enqueue(requisicao);
+                Console.WriteLine($"{requisicao.Cliente.Nome} foi adicionado à fila de espera.");
             }
         }
+
 
         private Mesa LocalizarMesa(int qtdePessoas)
         {
@@ -136,7 +130,22 @@ namespace Restaurante_POG_V2
                     Requisicao requisicao = requisicoes[requisicaoId];
                     requisicao.TerminarAtendimento();
                     requisicao.ExibirConta();
+                    Mesa mesa = requisicao.Mesa;
                     requisicoes.Remove(requisicaoId);
+
+                    if (filaEspera.Count > 0)
+                    {
+                        Requisicao proximaRequisicao = filaEspera.Dequeue();
+                        proximaRequisicao.Mesa = mesa;
+                        mesa.Alocar();
+                        requisicoes.Add(this.requisicaoId++, proximaRequisicao);
+                        Console.WriteLine($"Cliente {proximaRequisicao.Cliente.Nome} foi movido da fila para a mesa {mesa.Id}.");
+                        ExibirPedido(proximaRequisicao.Id);
+                    }
+                    else
+                    {
+                        mesa.Desalocar();
+                    }
                 }
                 else
                 {
@@ -152,6 +161,7 @@ namespace Restaurante_POG_V2
                 Console.WriteLine($"Erro ao finalizar requisição: {ex.Message}");
             }
         }
+
 
         public override void ExibirStatusMesas()
         {
