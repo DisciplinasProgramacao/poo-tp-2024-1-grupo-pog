@@ -4,18 +4,17 @@ using System;
 
 public class Requisicao
 {
-    private static int proximoId = 1;
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public Cliente Cliente { get; private set; }
     public int QtdePessoas { get; private set; }
     public DateTime DataEntrada { get; private set; }
-    public DateTime? DataSaida { get; private set; }
+    public DateTime DataSaida { get; private set; }
     public Mesa Mesa { get; set; }
     public Pedido Pedido { get; private set; }
 
-    public Requisicao(Cliente cliente, int qtdePessoas)
+    public Requisicao(int id, Cliente cliente, int qtdePessoas)
     {
-        Id = proximoId++;
+        Id = id;
         Cliente = cliente;
         QtdePessoas = qtdePessoas;
         DataEntrada = DateTime.Now;
@@ -23,11 +22,6 @@ public class Requisicao
     }
 
     public void AdicionarItemAoPedido(ItemCardapio item, int quantidade)
-    {
-        Pedido.AdicionarItem(item, quantidade);
-    }
-
-    public void AdicionarItemAoPedido(ItemCardapioCafe item, int quantidade)
     {
         Pedido.AdicionarItem(item, quantidade);
     }

@@ -10,10 +10,11 @@ namespace Restaurante_POG_V2
 
         public override void CriarRequisicao(Cliente cliente)
         {
-            Requisicao requisicao = new Requisicao(cliente, 1);
-            requisicoes[requisicaoId++] = requisicao;
-            Console.WriteLine($"Atendimento iniciado para {cliente.Nome}. ID da requisição: {requisicaoId - 1}");
+            Requisicao requisicao = new Requisicao(requisicaoId++, cliente, 1);
+            requisicoes[requisicao.Id] = requisicao;
+            Console.WriteLine($"Atendimento iniciado para {cliente.Nome}. ID da requisição: {requisicao.Id}");
         }
+
 
         public override void ExibirCardapio()
         {

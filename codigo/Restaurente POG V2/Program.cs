@@ -59,6 +59,7 @@ class Program
                     ExibirCardapio();
                     break;
                 case "5":
+                    ExibirCardapio();
                     AdicionarItemAoPedido();
                     break;
                 case "6":
