@@ -4,6 +4,8 @@ using System;
 
 public class Requisicao
 {
+    private static int proximoId = 1;
+    public int Id { get; private set; }
     public Cliente Cliente { get; private set; }
     public int QtdePessoas { get; private set; }
     public DateTime DataEntrada { get; private set; }
@@ -13,6 +15,7 @@ public class Requisicao
 
     public Requisicao(Cliente cliente, int qtdePessoas)
     {
+        Id = proximoId++;
         Cliente = cliente;
         QtdePessoas = qtdePessoas;
         DataEntrada = DateTime.Now;
